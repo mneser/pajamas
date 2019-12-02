@@ -1,0 +1,79 @@
+<script src='pj.js'></script>
+<script>
+    function exists(A) {
+        let pred = Predicate()
+        pred.set([A, _, _, _, _])
+        pred.set([_, A, _, _, _])
+        pred.set([_, _, A, _, _])
+        pred.set([_, _, _, A, _])
+        pred.set([_, _, _, _, A])
+        return pred
+    }
+
+    function rightOf(R, L) {
+        let pred = Predicate()
+        pred.set([L, R, _, _, _])
+        pred.set([_, L, R, _, _])
+        pred.set([_, _, L, R, _])
+        pred.set([_, _, _, L, R])
+        return pred
+    }
+
+    function middle(A) {
+        let pred = Predicate()
+        pred.set([_, _, A, _, _])
+        return pred
+    }
+
+    function first(A) {
+        let pred = Predicate()
+        pred.set([A, _, _, _, _])
+        return pred
+    }
+
+    function nextTo(A, B) {
+        let pred = Predicate()
+        pred.set([A, B, _, _, _])
+        pred.set([_, A, B, _, _])
+        pred.set([_, _, A, B, _])
+        pred.set([_, _, _, A, B])
+        pred.set([B, A, _, _, _])
+        pred.set([_, B, A, _, _])
+        pred.set([_, _, B, A, _])
+        pred.set([_, _, _, B, A])
+        return pred
+    }
+
+    let hints = Predicate()
+    hints.set(houses => Predicate.conjunction(
+        exists(['red', 'british', _, _, _])(houses),
+        exists([_, 'swedish', _, _, 'dog'])(houses),
+        exists(['green', _, 'coffee', _, _])(houses),
+        exists([_, 'danish', 'tea', _, _])(houses),
+        rightOf(['white', _, _, _, _], ['green', _, _, _, _])(houses),
+        exists([_, _, _, 'pall mall', 'bird'])(houses),
+        exists(['yellow', _, _, 'dunhill', _])(houses),
+        middle([_, _, 'milk', _, _])(houses),
+        first( [_, 'norwegian', _, _, _])(houses),
+        nextTo([_, _, _, 'blend', _], [_, _, _, _, 'cat'])(houses),
+        nextTo([_, _, _, 'dunhill', _], [_, _, _, _, 'horse'])(houses),
+        exists([_, _, 'beer', 'bluemaster', _])(houses),
+        exists([_, 'german', _, 'prince', _])(houses),
+        nextTo([_, 'norwegian', _, _, _], ['blue', _, _, _, _])(houses),
+        nextTo([_, _, _, 'blend', _], [_, _, 'water', _, _])(houses)
+    ))
+
+    let houses = new Var()   
+    let fishOwner = new Var()
+
+    let puzzle = Predicate()
+    puzzle.set(houses => Predicate.conjunction(
+        hints(houses),
+        exists([_, fishOwner, _, _, 'fish'])(houses)
+    ))
+
+    for (let h of puzzle(houses)) {
+        console.log('' + fishOwner)
+    }
+
+</script>

@@ -1,0 +1,20 @@
+<script src='pj.js'></script>
+<script>
+
+    function reverse([head, ...body]) {
+        return body.length ? [...reverse(body), head] : [head]
+    }
+
+    let list = [1, 2, 3]
+    console.log(reverse(list))
+
+    let food = Predicate()
+    food.set(['fruit', 'apple'])
+    food.set(['fruit', 'banana'])
+    food.set(['vegetable', 'carrot'])
+
+    let x = new Var()
+    for (let f of food(['fruit', x]))
+        console.log('' + x)
+ 
+</script>
